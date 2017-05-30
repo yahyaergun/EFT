@@ -1,7 +1,9 @@
 package com.yergun.demo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,16 +31,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //handle JWT auths.
                 .addFilterBefore(new JWTAuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class);
-        super.configure(http);
     }
 
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // default account
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("admin")
                 .password("password")
-                .roles("ADMIN");
+                .roles("ADMIN","USER");
     }
 }

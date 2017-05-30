@@ -1,4 +1,4 @@
-package com.yergun.demo.eft;
+package com.yergun.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
