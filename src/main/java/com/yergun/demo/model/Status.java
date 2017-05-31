@@ -1,9 +1,9 @@
 package com.yergun.demo.model;
 
 /**
- * Created by yahyaergun on 31/05/2017.
+ * Created by yahyaergun on 01/06/2017.
  */
-public enum TokenStatus {
+public enum Status {
     APPROVED,
     WAITING,
     DECLINED,

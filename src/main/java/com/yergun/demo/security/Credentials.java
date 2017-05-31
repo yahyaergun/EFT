@@ -3,7 +3,7 @@ package com.yergun.demo.security;
 /**
  * Created by yahyaergun on 29/05/2017.
  *
- * Seperate POJO for getting login requests via POST /login.
+ * Seperate POJO for getting login requests via POST on merchants/user/login.
  */
 public class Credentials {
     private String email;

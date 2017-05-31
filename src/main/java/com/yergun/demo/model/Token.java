@@ -5,7 +5,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Created by yahyaergun on 31/05/2017.
  */
-@XmlRootElement
 public class Token {
 
     private String token;
@@ -22,6 +21,10 @@ public class Token {
 
     public TokenStatus getStatus() {
         return status;
+    }
+
+    public enum TokenStatus {
+        APPROVED
     }
 
 }
