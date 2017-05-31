@@ -33,15 +33,15 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         Credentials credentials = new ObjectMapper().readValue(httpServletRequest.getInputStream(), Credentials.class);
 
         return getAuthenticationManager().authenticate(
-                new UsernamePasswordAuthenticationToken(credentials.getUsername(),
+                new UsernamePasswordAuthenticationToken(credentials.getEmail(),
                         credentials.getPassword(), Collections.emptyList()));
     }
 
-    @Override
-    protected void successfulAuthentication(HttpServletRequest req,
-                                            HttpServletResponse res, FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
-        TokenAuthService.addAuthentication(res, auth.getName());
-    }
+//    @Override
+//    protected void successfulAuthentication(HttpServletRequest req,
+//                                            HttpServletResponse res, FilterChain chain,
+//                                            Authentication auth) throws IOException, ServletException {
+//        TokenAuthService.addAuthentication(res, auth.getName());
+//    }
 
 }
