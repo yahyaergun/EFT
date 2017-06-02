@@ -1,36 +1,20 @@
 package com.yergun.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
-/**
- * Created by yahyaergun on 01/06/2017.
- */
-@Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MerchantTransaction {
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
     private String referenceNo;
     private String status;
     private String operation;
-    private Date createdAt;
     private String message;
     private Long transactionId;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @JsonFormat(pattern = "created_at")
+    private Date createdAt;
 
     public String getReferenceNo() {
         return referenceNo;
@@ -56,14 +40,6 @@ public class MerchantTransaction {
         this.operation = operation;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public String getMessage() {
         return message;
     }
@@ -78,5 +54,13 @@ public class MerchantTransaction {
 
     public void setTransactionId(Long transactionId) {
         this.transactionId = transactionId;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

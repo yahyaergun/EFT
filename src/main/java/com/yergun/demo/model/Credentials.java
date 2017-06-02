@@ -1,12 +1,12 @@
-package com.yergun.demo.security;
+package com.yergun.demo.model;
 
-/**
- * Created by yahyaergun on 29/05/2017.
- *
- * Seperate POJO for getting login requests via POST on merchants/user/login.
- */
+import org.hibernate.validator.constraints.NotBlank;
+
 public class Credentials {
+
+    @NotBlank
     private String email;
+    @NotBlank
     private String password;
 
     public String getEmail() {
