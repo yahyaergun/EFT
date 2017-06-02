@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-/**
- * Created by yahyaergun on 31/05/2017.
- */
 public interface MerchantService {
     Optional<Token> login(Credentials credentials);
 }

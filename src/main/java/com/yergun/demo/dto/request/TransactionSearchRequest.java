@@ -1,13 +1,10 @@
-package com.yergun.demo.dto;
+package com.yergun.demo.dto.request;
 
 import com.yergun.demo.model.*;
 
 import java.util.Date;
 
-/**
- * Created by yahyaergun on 01/06/2017.
- */
-public class TransactionSearchRequestDTO {
+public class TransactionSearchRequest {
     private Date fromDate;
     private Date toDate;
     private Status status;

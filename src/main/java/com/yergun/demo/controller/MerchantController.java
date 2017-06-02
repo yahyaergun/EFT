@@ -33,7 +33,7 @@ public class MerchantController {
 
         if(bindingResult.hasErrors()){
             LOGGER.info("Invalid login parameters request, email:{}",credentials.getEmail());
-            return new ResponseEntity<Token>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         Optional<Token> tokenOpt = null;
@@ -44,11 +44,11 @@ public class MerchantController {
             LOGGER.info("Call to test-report api failed with status : {},  description : {}", e.getStatusText(), e.getResponseBodyAsString());
         }
 
-        if(!tokenOpt.isPresent()){
+        if(null != tokenOpt && !tokenOpt.isPresent()){
             LOGGER.info("Authentication failed, email:{}",credentials.getEmail());
-            return new ResponseEntity<Token>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        return new ResponseEntity<Token>(tokenOpt.get(), HttpStatus.OK);
+        return new ResponseEntity<>(tokenOpt.get(), HttpStatus.OK);
     }
 }

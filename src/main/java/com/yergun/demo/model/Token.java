@@ -2,9 +2,6 @@ package com.yergun.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * Created by yahyaergun on 31/05/2017.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Token {
 

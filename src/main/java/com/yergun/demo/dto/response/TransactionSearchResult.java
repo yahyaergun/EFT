@@ -1,13 +1,10 @@
-package com.yergun.demo.dto;
+package com.yergun.demo.dto.response;
 
 import com.yergun.demo.model.*;
 
 import java.util.List;
 
-/**
- * Created by yahyaergun on 01/06/2017.
- */
-public class TransactionSearchResultDTO {
+public class TransactionSearchResult {
 
     private Fx fx;
     private CustomerInfo customerInfo;
