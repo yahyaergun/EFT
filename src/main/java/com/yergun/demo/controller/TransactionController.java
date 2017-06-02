@@ -1,7 +1,9 @@
 package com.yergun.demo.controller;
 
+import com.yergun.demo.dto.request.TransactionListRequest;
 import com.yergun.demo.dto.request.TransactionReportRequest;
-import com.yergun.demo.dto.response.TransactionReportBaseResponse;
+import com.yergun.demo.dto.response.TransactionListResponse;
+import com.yergun.demo.dto.response.TransactionReportResponse;
 import com.yergun.demo.service.TransactionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,8 @@ import org.springframework.web.client.RestClientResponseException;
 
 import javax.validation.Valid;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
 
 @RestController
 @RequestMapping(value = "/transactions")
@@ -25,15 +29,17 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<TransactionReportBaseResponse> transactionReport(@RequestBody @Valid TransactionReportRequest transactionReportRequest,
-                                                                    @RequestHeader("Authorization") String token, BindingResult bindingResult) {
+    public
+    @ResponseBody
+    ResponseEntity<TransactionReportResponse> transactionReport(@RequestBody @Valid TransactionReportRequest transactionReportRequest,
+                                                                @RequestHeader("Authorization") String token, BindingResult bindingResult) {
         LOGGER.info("Transaction Report request received with token:{}", token);
 
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Optional<TransactionReportBaseResponse> responseOpt = Optional.empty();
+        Optional<TransactionReportResponse> responseOpt = Optional.empty();
 
         try {
             responseOpt = transactionService.report(transactionReportRequest, token);
@@ -48,5 +54,12 @@ public class TransactionController {
         return new ResponseEntity<>(responseOpt.get(), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    public @ResponseBody CompletableFuture<ResponseEntity<TransactionListResponse>> transactionList(@RequestBody @Valid TransactionListRequest transactionListRequest,
+                                                                               @RequestHeader("Authorization") String token, BindingResult bindingResult) {
+        LOGGER.info("Transaction list request received with token:{}", token);
 
+        CompletableFuture.supplyAsync(() -> transactionService.list(transactionListRequest, token)).whenComplete();
+        return null;
+    }
 }

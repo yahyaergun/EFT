@@ -2,6 +2,8 @@ package com.yergun.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -13,7 +15,8 @@ public class MerchantTransaction {
     private String message;
     private Long transactionId;
 
-    @JsonFormat(pattern = "created_at")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonProperty("created_at")
     private Date createdAt;
 
     public String getReferenceNo() {

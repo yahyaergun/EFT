@@ -1,14 +1,15 @@
 package com.yergun.demo.service.impl;
 
+import com.yergun.demo.dto.request.TransactionListRequest;
 import com.yergun.demo.dto.request.TransactionReportRequest;
-import com.yergun.demo.dto.response.TransactionReportBaseResponse;
+import com.yergun.demo.dto.response.TransactionListResponse;
+import com.yergun.demo.dto.response.TransactionReportResponse;
 import com.yergun.demo.service.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class TransactionServiceImpl extends AbstractServiceImpl implements TransactionService {
@@ -16,10 +17,20 @@ public class TransactionServiceImpl extends AbstractServiceImpl implements Trans
     @Value("${api.transaction.report.url}")
     private String transactionReportUrl;
 
+    @Value("${api.transaction.list.url}")
+    private String transactionListUrl;
+
     @Override
-    public Optional<TransactionReportBaseResponse> report(TransactionReportRequest transactionReportRequest, String token) {
-        TransactionReportBaseResponse response = restTemplate.postForObject(transactionReportUrl,
-                prepareHttpEntityWithTokenHeader(transactionReportRequest, token), TransactionReportBaseResponse.class);
+    public Optional<TransactionReportResponse> report(TransactionReportRequest transactionReportRequest, String token) {
+        TransactionReportResponse response = restTemplate.postForObject(transactionReportUrl,
+                prepareHttpEntityWithTokenHeader(transactionReportRequest, token), TransactionReportResponse.class);
+        return Optional.ofNullable(response);
+    }
+
+    @Override
+    public Optional<TransactionListResponse> list(TransactionListRequest transactionListRequest, String token) {
+        TransactionListResponse response = restTemplate.postForObject(transactionListUrl,
+                prepareHttpEntityWithTokenHeader(transactionListRequest, token) , TransactionListResponse.class);
         return Optional.ofNullable(response);
     }
 }

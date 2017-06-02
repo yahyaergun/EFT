@@ -1,12 +1,21 @@
 package com.yergun.demo.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yergun.demo.model.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 
-public class TransactionSearchRequest {
+public class TransactionListRequest {
+
+    @Valid
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date fromDate;
+
+    @Valid
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date toDate;
+
     private Status status;
     private Operation operation;
     private Long merchantId;

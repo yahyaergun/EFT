@@ -4,7 +4,7 @@ import com.yergun.demo.model.*;
 
 import java.util.List;
 
-public class TransactionSearchResult {
+public class TransactionListResponseData {
 
     private Fx fx;
     private CustomerInfo customerInfo;

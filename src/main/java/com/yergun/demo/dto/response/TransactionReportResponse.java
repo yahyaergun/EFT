@@ -2,7 +2,7 @@ package com.yergun.demo.dto.response;
 
 import java.util.List;
 
-public class TransactionReportBaseResponse {
+public class TransactionReportResponse {
     private String status;
     private List<TransactionReportResponseData> response;
 
