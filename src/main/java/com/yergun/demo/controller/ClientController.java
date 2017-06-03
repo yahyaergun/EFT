@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientResponseException;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -25,7 +26,7 @@ public class ClientController {
     private ClientService clientService;
 
     @RequestMapping(value = "/client", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<ClientResponse> customer(@RequestBody TransactionRequest transactionRequest,
+    public @ResponseBody ResponseEntity<ClientResponse> customer(@RequestBody @Valid TransactionRequest transactionRequest,
                                                                  @RequestHeader("Authorization") String token, BindingResult bindingResult) {
         LOGGER.info("Customer request recevied with token: {}", token);
 

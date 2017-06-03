@@ -82,9 +82,9 @@ public class TransactionController {
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<TransactionResponse> transaction(@RequestBody TransactionRequest transactionRequest,
+    public @ResponseBody ResponseEntity<TransactionResponse> transaction(@RequestBody @Valid TransactionRequest transactionRequest,
                                                                          @RequestHeader("Authorization") String token, BindingResult bindingResult) {
-        LOGGER.info("Transaction list request received with token:{}", token);
+        LOGGER.info("Transaction request received with token:{}", token);
 
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

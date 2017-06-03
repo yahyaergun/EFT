@@ -3,9 +3,6 @@ package com.yergun.demo.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-/**
- * Created by yahyaergun on 01/06/2017.
- */
 public enum Operation {
     DIRECT("DIRECT"),
     REFUND("REFUND"),
