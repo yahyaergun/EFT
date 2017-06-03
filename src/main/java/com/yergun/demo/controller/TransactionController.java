@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientResponseException;
@@ -17,10 +19,12 @@ import org.springframework.web.client.RestClientResponseException;
 import javax.validation.Valid;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.function.BiConsumer;
 
 @RestController
-@RequestMapping(value = "/transactions")
+@EnableAsync
+@RequestMapping(value = {"/transactions", "/transaction"})
 public class TransactionController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionController.class);
@@ -55,11 +59,11 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    public @ResponseBody CompletableFuture<ResponseEntity<TransactionListResponse>> transactionList(@RequestBody @Valid TransactionListRequest transactionListRequest,
+    @Async
+    public @ResponseBody CompletableFuture transactionList (@RequestBody @Valid TransactionListRequest transactionListRequest,
                                                                                @RequestHeader("Authorization") String token, BindingResult bindingResult) {
         LOGGER.info("Transaction list request received with token:{}", token);
+        return CompletableFuture.supplyAsync(() -> transactionService.list(transactionListRequest, token));
 
-        CompletableFuture.supplyAsync(() -> transactionService.list(transactionListRequest, token)).whenComplete();
-        return null;
     }
 }
