@@ -16,10 +16,6 @@ public class Merchant {
     private String name;
     private String email;
     private String password;
-
-    @JsonFormat(pattern = "3dStatus")
-    private String threeDStatus;
-
     private String mcc;
     private String ipnUrl;
     private String apiKey;
@@ -28,6 +24,9 @@ public class Merchant {
     private String descriptor;
     private String secretKey;
     private String comType;
+
+    @JsonFormat(pattern = "3dStatus")
+    private String threeDStatus;
 
     public Long getId() {
         return id;

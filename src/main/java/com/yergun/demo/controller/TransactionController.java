@@ -24,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping(value = {"/transactions", "/transaction"})
+@RequestMapping(value = "/transactions")
 public class TransactionController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionController.class);
@@ -81,7 +81,7 @@ public class TransactionController {
     }
 
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<TransactionResponse> transaction(@RequestBody TransactionRequest transactionRequest,
                                                                          @RequestHeader("Authorization") String token, BindingResult bindingResult) {
         LOGGER.info("Transaction list request received with token:{}", token);

@@ -11,11 +11,11 @@ public class AbstractServiceImpl {
     @Autowired
     RestTemplate restTemplate;
 
-    <T> HttpEntity<T> prepareHttpEntityWithTokenHeader(T objectToPost, String token){
+    <T> HttpEntity<T> prepareHttpEntityWithTokenHeader(T requestObject, String token){
         MultiValueMap<String, String> headerMap = new LinkedMultiValueMap<>();
         headerMap.add("Authorization", token);
 
-        return new HttpEntity<>(objectToPost, headerMap);
+        return new HttpEntity<>(requestObject, headerMap);
     }
 
 

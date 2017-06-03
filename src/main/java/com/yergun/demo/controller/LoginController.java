@@ -2,7 +2,7 @@ package com.yergun.demo.controller;
 
 import com.yergun.demo.model.Token;
 import com.yergun.demo.model.Credentials;
-import com.yergun.demo.service.MerchantService;
+import com.yergun.demo.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,12 @@ import javax.validation.Valid;
 
 
 @RestController
-public class MerchantController {
+public class LoginController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MerchantController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
-    private MerchantService merchantService;
+    private LoginService loginService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<Token> login(@RequestBody @Valid Credentials credentials, BindingResult bindingResult){
@@ -39,7 +39,7 @@ public class MerchantController {
         Optional<Token> tokenOpt = null;
 
         try{
-            tokenOpt = merchantService.login(credentials);
+            tokenOpt = loginService.login(credentials);
         } catch (RestClientResponseException e){
             LOGGER.info("Call to test-report api failed with status : {},  description : {}", e.getStatusText(), e.getResponseBodyAsString());
         }
