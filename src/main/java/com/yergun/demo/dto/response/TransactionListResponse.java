@@ -23,7 +23,7 @@ public class TransactionListResponse {
     private Integer from;
     private Integer to;
 
-    private List<TransactionListResponseData> data;
+    private List<TransactionResponse> data;
 
     public Integer getPerPage() {
         return perPage;
@@ -73,11 +73,11 @@ public class TransactionListResponse {
         this.to = to;
     }
 
-    public List<TransactionListResponseData> getData() {
+    public List<TransactionResponse> getData() {
         return data;
     }
 
-    public void setData(List<TransactionListResponseData> data) {
+    public void setData(List<TransactionResponse> data) {
         this.data = data;
     }
 }

@@ -1,18 +1,23 @@
 package com.yergun.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 
-/**
- * Created by yahyaergun on 01/06/2017.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Acquirer {
 
     private Long id;
     private String name;
     private String code;
     private String type;
+
+    public Acquirer() {}
+
+    public Acquirer(String name){
+        this.name = name;
+    }
 
     public Long getId() {
         return id;

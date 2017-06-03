@@ -1,18 +1,21 @@
 package com.yergun.demo.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yergun.demo.model.*;
 
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
-
-public class TransactionListResponseData {
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class TransactionResponse {
 
     private Fx fx;
     private CustomerInfo customerInfo;
-    private String acquirer;
+    private Acquirer acquirer;
     private Merchant merchant;
     private Transaction transaction;
     private Boolean refundable;
@@ -41,11 +44,11 @@ public class TransactionListResponseData {
         this.customerInfo = customerInfo;
     }
 
-    public String getAcquirer() {
+    public Acquirer getAcquirer() {
         return acquirer;
     }
 
-    public void setAcquirer(String acquirer) {
+    public void setAcquirer(Acquirer acquirer) {
         this.acquirer = acquirer;
     }
 

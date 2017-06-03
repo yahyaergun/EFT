@@ -1,7 +1,9 @@
 package com.yergun.demo.controller;
 
+import com.yergun.demo.dto.request.TransactionRequest;
 import com.yergun.demo.dto.request.TransactionListRequest;
 import com.yergun.demo.dto.request.TransactionReportRequest;
+import com.yergun.demo.dto.response.TransactionResponse;
 import com.yergun.demo.dto.response.TransactionListResponse;
 import com.yergun.demo.dto.response.TransactionReportResponse;
 import com.yergun.demo.service.TransactionService;
@@ -17,11 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientResponseException;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.function.BiConsumer;
 
 @RestController
 @EnableAsync
@@ -34,9 +33,7 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    ResponseEntity<TransactionReportResponse> transactionReport(@RequestBody @Valid TransactionReportRequest transactionReportRequest,
+    public @ResponseBody ResponseEntity<TransactionReportResponse> transactionReport(@RequestBody @Valid TransactionReportRequest transactionReportRequest,
                                                                 @RequestHeader("Authorization") String token, BindingResult bindingResult) {
         LOGGER.info("Transaction Report request received with token:{}", token);
 
@@ -52,11 +49,11 @@ public class TransactionController {
             LOGGER.error("'/transactions/report' api call failed with status : {},  description : {} ", e.getStatusText(), e.getResponseBodyAsString());
         }
 
-        if (!responseOpt.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        if (responseOpt.isPresent()) {
+            return new ResponseEntity<>(responseOpt.get(), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(responseOpt.get(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -81,5 +78,30 @@ public class TransactionController {
                             throw new RuntimeException(error);
                         }
                 );
+    }
+
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<TransactionResponse> transaction(@RequestBody TransactionRequest transactionRequest,
+                                                                         @RequestHeader("Authorization") String token, BindingResult bindingResult) {
+        LOGGER.info("Transaction list request received with token:{}", token);
+
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<TransactionResponse> responseOpt = Optional.empty();
+
+        try {
+            responseOpt = transactionService.transaction(transactionRequest, token);
+        } catch (RestClientResponseException e) {
+            LOGGER.error("'/transaction' api call failed with status : {},  description : {} ", e.getStatusText(), e.getResponseBodyAsString());
+        }
+
+        if (responseOpt.isPresent()) {
+            return new ResponseEntity<>(responseOpt.get(), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
