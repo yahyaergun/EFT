@@ -13,7 +13,7 @@ public class MerchantTransaction {
     private String status;
     private String operation;
     private String message;
-    private Long transactionId;
+    private String transactionId;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonProperty("created_at")
@@ -51,11 +51,11 @@ public class MerchantTransaction {
         this.message = message;
     }
 
-    public Long getTransactionId() {
+    public String getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(Long transactionId) {
+    public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }
 

@@ -10,5 +10,5 @@ import java.util.concurrent.CompletableFuture;
 
 public interface TransactionService {
     Optional<TransactionReportResponse> report(TransactionReportRequest transactionReportRequest, String token);
-    CompletableFuture<TransactionListResponse> list(TransactionListRequest transactionListRequest, String token);
+    Optional<TransactionListResponse> list(TransactionListRequest transactionListRequest, String token);
 }

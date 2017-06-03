@@ -1,8 +1,8 @@
 package com.yergun.demo.model;
 
-/**
- * Created by yahyaergun on 01/06/2017.
- */
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum ErrorCode {
     DO_NOT_HONOR("Do not honor"),
     INV_TRX("Invalid Transaction"),
@@ -21,8 +21,21 @@ public enum ErrorCode {
         this.errorDescription = errorDescription;
     }
 
-    public String getErrorDescription() {
+    @JsonValue
+    public String toValue() {
         return errorDescription;
+    }
+
+    @JsonCreator
+    public static ErrorCode forValue(String value) {
+        if (value != null) {
+            for (ErrorCode errorCode : ErrorCode.values()) {
+                if (value.equalsIgnoreCase(errorCode.toValue())) {
+                    return errorCode;
+                }
+            }
+        }
+        return null;
     }
 
 }

@@ -6,6 +6,7 @@ import com.yergun.demo.dto.request.TransactionReportRequest;
 import com.yergun.demo.dto.response.TransactionListResponse;
 import com.yergun.demo.dto.response.TransactionReportResponse;
 import com.yergun.demo.service.TransactionService;
+import com.yergun.demo.util.Utilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,8 +18,6 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class TransactionServiceImpl extends AbstractServiceImpl implements TransactionService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(TransactionController.class);
 
     @Value("${api.transaction.report.url}")
     private String transactionReportUrl;
@@ -34,8 +33,12 @@ public class TransactionServiceImpl extends AbstractServiceImpl implements Trans
     }
 
     @Override
-    public CompletableFuture<TransactionListResponse>list(TransactionListRequest transactionListRequest, String token) {
-        return CompletableFuture.supplyAsync(() -> restTemplate.postForObject(transactionListUrl,
-                prepareHttpEntityWithTokenHeader(transactionListRequest, token), TransactionListResponse.class));
+    public Optional<TransactionListResponse> list(TransactionListRequest transactionListRequest, String token) {
+
+        TransactionListResponse response = restTemplate.postForObject(transactionListUrl,
+                prepareHttpEntityWithTokenHeader(transactionListRequest, token), TransactionListResponse.class);
+
+        return Optional.ofNullable(response);
     }
+
 }

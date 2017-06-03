@@ -8,9 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-/**
- * Created by yahyaergun on 01/06/2017.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerInfo {

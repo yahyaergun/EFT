@@ -1,16 +1,29 @@
 package com.yergun.demo.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yergun.demo.model.*;
 
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 public class TransactionListResponseData {
 
     private Fx fx;
     private CustomerInfo customerInfo;
-    private List<Acquirer> acquirerTransactions;
+    private String acquirer;
     private Merchant merchant;
-    private List<MerchantTransaction> merchantTransaction;
+    private Transaction transaction;
+    private Boolean refundable;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonProperty("created_at")
+    private Date createdAt;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonProperty("updated_at")
+    private Date updatedAt;
 
     public Fx getFx() {
         return fx;
@@ -28,12 +41,12 @@ public class TransactionListResponseData {
         this.customerInfo = customerInfo;
     }
 
-    public List<Acquirer> getAcquirerTransactions() {
-        return acquirerTransactions;
+    public String getAcquirer() {
+        return acquirer;
     }
 
-    public void setAcquirerTransactions(List<Acquirer> acquirerTransactions) {
-        this.acquirerTransactions = acquirerTransactions;
+    public void setAcquirer(String acquirer) {
+        this.acquirer = acquirer;
     }
 
     public Merchant getMerchant() {
@@ -44,11 +57,35 @@ public class TransactionListResponseData {
         this.merchant = merchant;
     }
 
-    public List<MerchantTransaction> getMerchantTransaction() {
-        return merchantTransaction;
+    public Transaction getTransaction() {
+        return transaction;
     }
 
-    public void setMerchantTransaction(List<MerchantTransaction> merchantTransaction) {
-        this.merchantTransaction = merchantTransaction;
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
+    public Boolean getRefundable() {
+        return refundable;
+    }
+
+    public void setRefundable(Boolean refundable) {
+        this.refundable = refundable;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

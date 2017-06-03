@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientResponseException;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -60,10 +61,25 @@ public class TransactionController {
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @Async
-    public @ResponseBody CompletableFuture transactionList (@RequestBody @Valid TransactionListRequest transactionListRequest,
-                                                                               @RequestHeader("Authorization") String token, BindingResult bindingResult) {
+    public @ResponseBody CompletableFuture<ResponseEntity<TransactionListResponse>> transactionList (@RequestBody @Valid TransactionListRequest transactionListRequest,
+                                                                                                     @RequestHeader("Authorization") String token, BindingResult bindingResult) {
         LOGGER.info("Transaction list request received with token:{}", token);
-        return CompletableFuture.supplyAsync(() -> transactionService.list(transactionListRequest, token));
 
+        if (bindingResult.hasErrors()) {
+            return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+        }
+
+        return CompletableFuture.supplyAsync(() -> transactionService.list(transactionListRequest, token))
+                .thenApply((result) -> {
+                    if (result.isPresent()) {
+                        return new ResponseEntity<>(result.get(), HttpStatus.OK);
+                    }
+                    return new ResponseEntity<TransactionListResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+                })
+                .exceptionally((error) -> {
+                            LOGGER.error("Error on transaction query endpoint, details:{}", error.getLocalizedMessage());
+                            throw new RuntimeException(error);
+                        }
+                );
     }
 }
