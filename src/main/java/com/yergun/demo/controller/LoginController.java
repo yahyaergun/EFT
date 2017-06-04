@@ -36,19 +36,20 @@ public class LoginController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Optional<Token> tokenOpt = null;
+        Optional<Token> tokenOpt = Optional.empty();
 
         try{
             tokenOpt = loginService.login(credentials);
         } catch (RestClientResponseException e){
             LOGGER.info("Call to test-report api failed with status : {},  description : {}", e.getStatusText(), e.getResponseBodyAsString());
+            return new ResponseEntity<>(HttpStatus.valueOf(e.getRawStatusCode()));
         }
 
-        if(null != tokenOpt && !tokenOpt.isPresent()){
-            LOGGER.info("Authentication failed, email:{}",credentials.getEmail());
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if(tokenOpt.isPresent()){
+            return new ResponseEntity<>(tokenOpt.get(), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(tokenOpt.get(), HttpStatus.OK);
+        LOGGER.info("Authentication failed, email:{}",credentials.getEmail());
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }

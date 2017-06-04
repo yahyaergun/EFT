@@ -47,6 +47,7 @@ public class TransactionController {
             responseOpt = transactionService.report(transactionReportRequest, token);
         } catch (RestClientResponseException e) {
             LOGGER.error("'/transactions/report' api call failed with status : {},  description : {} ", e.getStatusText(), e.getResponseBodyAsString());
+            return new ResponseEntity<>(HttpStatus.valueOf(e.getRawStatusCode()));
         }
 
         if (responseOpt.isPresent()) {
@@ -58,7 +59,7 @@ public class TransactionController {
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @Async
-    public @ResponseBody CompletableFuture<ResponseEntity<TransactionListResponse>> transactionList (@RequestBody @Valid TransactionListRequest transactionListRequest,
+    public @ResponseBody CompletableFuture<ResponseEntity<TransactionListResponse>> transactionList (@RequestBody TransactionListRequest transactionListRequest,
                                                                                                      @RequestHeader("Authorization") String token, BindingResult bindingResult) {
         LOGGER.info("Transaction list request received with token:{}", token);
 
@@ -96,6 +97,7 @@ public class TransactionController {
             responseOpt = transactionService.transaction(transactionRequest, token);
         } catch (RestClientResponseException e) {
             LOGGER.error("'/transaction' api call failed with status : {},  description : {} ", e.getStatusText(), e.getResponseBodyAsString());
+            return new ResponseEntity<>(HttpStatus.valueOf(e.getRawStatusCode()));
         }
 
         if (responseOpt.isPresent()) {

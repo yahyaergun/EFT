@@ -8,11 +8,9 @@ import java.util.Date;
 
 public class TransactionListRequest {
 
-    @Valid
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date fromDate;
 
-    @Valid
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date toDate;
 

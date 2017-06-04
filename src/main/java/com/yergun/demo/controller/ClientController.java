@@ -40,6 +40,7 @@ public class ClientController {
             responseOpt = clientService.customer(transactionRequest, token);
         } catch (RestClientResponseException e) {
             LOGGER.error("'/client' api call failed with status : {},  description : {} ", e.getStatusText(), e.getResponseBodyAsString());
+            return new ResponseEntity<>(HttpStatus.valueOf(e.getRawStatusCode()));
         }
 
         if (responseOpt.isPresent()) {

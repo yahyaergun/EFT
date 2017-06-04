@@ -9,6 +9,13 @@ public class Credentials {
     @NotBlank
     private String password;
 
+    public Credentials() {}
+
+    public Credentials(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }

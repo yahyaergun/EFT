@@ -16,7 +16,7 @@ public class LoginServiceImpl extends AbstractServiceImpl implements LoginServic
     private String loginUrl;
 
     @Override
-    public Optional<Token> login(Credentials credentials) throws RestClientResponseException {
+    public Optional<Token> login(Credentials credentials) {
         Token token = restTemplate.postForObject(loginUrl, credentials, Token.class);
         return Optional.ofNullable(token);
     }
